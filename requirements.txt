@@ -5,6 +5,7 @@ gunicorn==19.6.0
 whitenoise==3.2.2
 dj-database-url==0.4.1
 django-bootstrap3>=11.0.0
+psycopg2>=2.8.2
 
 
 # Only needed for running tests.
