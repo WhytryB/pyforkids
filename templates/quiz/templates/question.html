@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load i18n%}
+
+{% load quiz_tags %}
+
+{% block title %} {{ quiz.title }} {% endblock %}
+{% block description %} {{ quiz.title }} - {{ quiz.description }} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mar2">
+{% if previous.answers %}
+
+  <p class="muted"><small>Это прошлый вопрос:</small></p>
+  <p>{{ previous.previous_question }}</p>
+
+  {% if previous.previous_outcome %}
+	<div class="alert alert-success">
+  {% else %}
+	<div class="alert alert-warning">
+  {% endif %}
+  	  <p><small>
+		Ваш ответ: </small>
+		<strong>
+		  {{ previous.previous_outcome|yesno:"правильно,непрпвильно" }}
+		</strong>
+	  </p>
+
+	</div>
+
+	Правильный ответ:
+
+	<p><strong>Обьяснение:</strong></p>
+	<div class="well " style="background-color: #fcf8e3;">
+	  <p>{{ previous.previous_question.explanation }}</p>
+	</div>
+
+	<hr>
+
+{% endif %}
+
+<br />
+</div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mar2">
+        {% if question %}
+
+        {% if progress %}
+        <div style="float: right;">
+        Вопрос {{ progress.0|add:1 }} из {{ progress.1 }}
+        </div>
+        {% endif %}
+        {% if question.figure %}
+            <img src="{{ question.figure.url }}" alt="{{ question.content }}" />
+        {% endif %}
+        <div class=" mid-text skel black-c">
+                  <h1 >{{ question.content }} ?</h1>
+		    </div>
+          <p>
+          <small class="muted">Категория вопроса:</small>
+          <strong>{{ question.category }}</strong>
+        </p>
+        <p>Введи свой вариант ответа:</p>
+
+<form action="" method="POST">{% csrf_token %}
+  <input type=hidden name="question_id" value="{{ question.id }}">
+
+  <ul class="list-group">
+
+	{% for answer in form.answers %}
+	  <li class="list-group-item">
+	    {{ answer }}
+	  </li>
+	{% endfor %}
+
+  </ul>
+  <input type="submit" value=Проверить class="btn btn-large btn-block btn-warning btn-lblue" >
+</form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<hr>
+
+
+{% endblock %}

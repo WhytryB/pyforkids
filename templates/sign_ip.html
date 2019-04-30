@@ -1,0 +1,44 @@
+{% extends "login.html" %}
+
+{% block but %}
+        <button type="submit" name="reg" {{ disabled2 }} class="btn btn-primary center-block"
+        style="margin-top: 20px;">Зарегистрироваться</button>
+{% endblock %}
+
+
+{% block script %}
+$('#id_username').on('input' , fun);
+var interval;
+function fun(){
+    $.ajax({
+        method: 'POST',
+        url: '/registration/',
+        dataType: "json",
+        cache: false,
+        data:  $(this).serialize(),
+        success:
+        function(response) {
+                     console.log(response);
+                     if(response['s'] ) {
+                         $("#result1").show();
+                         $("#result1").html("<div class='alert alert-success'>Номер валидный</div>");
+                         $("#result").hide();
+
+                     }
+                     if(response['error'] ) {
+                         $("#result").show();
+                         $("#result").html("<div class='alert alert-danger'>"+ response['error']['username']+"</div>");
+                         $("#result1").hide();
+                     }
+
+
+                },
+
+        error :
+        function (request, status, error) {
+                     console.log(request.responseText);
+                }
+        })
+
+    }
+{% endblock %}

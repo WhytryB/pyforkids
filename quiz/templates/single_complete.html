@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+{% block title %} {{ quiz.title }} {% endblock %}
+{% block description %} {{ quiz.title }} - {{ quiz.description }} {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mar2">
+            {% if user.is_authenticated %}
+              <p>Вы уже сдали этот экзамен, и разрешена только одна здача.</p>
+            {% else %}
+              <p>Этот экзамен доступен только зарегистрированным пользователям.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

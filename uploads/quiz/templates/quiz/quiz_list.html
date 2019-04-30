@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "All Quizzes" %}{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid container-fluid1 con-fl">
+    <div class="row">
+        <div class="col-md-12">
+			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+			  <ol class="carousel-indicators">
+				<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+			  </ol>
+			  <div class="carousel-inner">
+
+				<div class="carousel-item active justify-content-center">
+					 <div class="carousel-content">
+						<h1>Хочешь стать программистом?</h1>
+						 <p>Попробуй пройти тесты!</p>
+						<a  href="{% url 'quiz_category_list_all' %}" class="btn btn-lblue test_but">Просмотерть все тесты</a>
+					</div>
+			  <img src="static/590.png"  class="col-md-8 pull-center"alt="Первый слайд">
+				</div>
+				<div class="carousel-item">
+					<div class="carousel-content-two">
+						<h1>Хочешь стать программистом?</h1>
+						 <p>Попробуй пройти тесты!</p>
+						<a  href="{% url 'quiz_category_list_all' %}" class="btn btn-lblue test_but">Начать тест</a>
+					</div>
+				  <img src="static/5902.png" class="col-md-8 pull-right" alt="Второй слайд">
+				</div>
+			  </div>
+			  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Предыдущий</span>
+			  </a>
+			  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Следующий</span>
+			  </a>
+			</div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--       <div class=col-md-12>-->
+<!--<h2>{% trans "List of quizzes" %}</h2>-->
+<!--    {% if quiz_list %}-->
+<!--		<table class="table table-bordered table-striped">-->
+
+<!--		  <thead>-->
+<!--			<tr>-->
+<!--			  <th>{% trans "Title" %}</th>-->
+<!--			  <th>{% trans "Category" %}</th>-->
+<!--			  <th>{% trans "Exam" %}</th>-->
+<!--			  <th>{% trans "Single attempt" %}</th>-->
+<!--			  <th></th>-->
+<!--			</tr>-->
+<!--		  </thead>-->
+
+<!--		  <tbody>-->
+
+<!--        {% for quiz in quiz_list %}-->
+<!--  			<tr>-->
+<!--			  <td>{{ quiz.title }}</td>-->
+<!--			  <td>{{ quiz.category }}</td>-->
+<!--			  <td>{{ quiz.exam_paper }}</td>-->
+<!--			  <td>{{ quiz.single_attempt }}</td>-->
+<!--			  <td>-->
+<!--				<a href="{% url 'quiz_start_page' slug=quiz.url %}">-->
+<!--				  {% trans "View details" %}-->
+<!--				</a>-->
+<!--			</tr>-->
+<!--        {% endfor %}-->
+<!--		  </tbody>-->
+
+<!--		</table>-->
+
+<!--	{% else %}-->
+<!--        <p>{% trans "There are no available quizzes" %}.</p>-->
+<!--    {% endif %}-->
+<!--       </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div class="container mid-te">
+	<div class="row">
+		<div class="col-sm-16 mid-text">
+		<h1> Тебе будет нужно пройти тест один за другим и отправится в мир программирования на Python!</h1>
+		</div>
+	</div>
+</div>
+<div class="ui-12">
+
+	{% for quiz in quiz_list %}
+			<div class="container">
+				<div class="ui-content">
+					<div class="ui-head bg-lblue">
+						<h2>{{quiz.id }} . {{ quiz.title }}</h2>
+					</div>
+					<div class="ui-body br-lblue">
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<div class="ui-feature">
+									<h4>Категория:</h4>
+									<h3>{{ quiz.category }}</h3>
+									<a href="{% url 'quiz_start_page' slug=quiz.url %}" class="btn btn-lblue">Начать тест</a>
+								</div>
+							</div>
+								<div class="col-md-6 col-sm-6">
+								<!-- UI Description -->
+								<h4>Описание:</h4>
+								<div class="ui-description">
+
+									<p>{{quiz.description }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{% endfor %}
+
+</div>
+{% endblock %}

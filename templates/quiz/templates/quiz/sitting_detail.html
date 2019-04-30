@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load quiz_tags %}
+{% block title %}
+Результат из {{ sitting.quiz.title }} для {{ sitting.user }}
+{% endblock %}
+
+{% block content %}
+<h2>Название тесты: {{ sitting.quiz.title }}</h2>
+<h3>Категория: {{ sitting.quiz.category }}</h3>
+<p>{{ sitting.quiz.description }}</p>
+<hr>
+<p>Пользователь: {{ sitting.user }}</p>
+<p>Пройдено: {{ sitting.end|date }}</p>
+<p>Результат: {{ sitting.get_percent_correct }}%</p>
+
+<table class="table table-bordered table-striped">
+
+  <thead>
+	<tr>
+	  <th>Вопрос</th>
+	  <th>Ответ пользователя</th>
+	  <th></th>
+	  <th></th>
+	</tr>
+  </thead>
+
+  <tbody>
+{% for question in questions %}
+
+	<tr>
+      <td>
+        {{ question.content }}
+        {% if question.figure %}
+        <div style="max-width: 100px;"><img src="{{ question.figure.url }}" alt="{{ question.figure }}"/></div>
+        {% endif %}
+      </td>
+	  <td>{{ question|answer_choice_to_string:question.user_answer }}</td>
+	  <td>
+		{% if question.id in sitting.get_incorrect_questions %}
+		  <p>Не верно</p>
+		{% else %}
+		  <p>Верно</p>
+		{% endif %}
+	  </td>
+	  <td>
+		<form action="" method="POST">{% csrf_token %}
+		  <input type=hidden name="qid" value="{{ question.id }}">
+		  <button type="submit" class="btn btn-warning">Переключить ли правильно</button>
+		</form>
+	  </td>
+	</tr>
+
+{% endfor %}
+
+  </tbody>
+
+</table>
+{% endblock %}
