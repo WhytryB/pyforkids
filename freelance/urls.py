@@ -20,6 +20,9 @@ from app_registration import views as vi
 from quiz.views import QuizListView, CategoriesListView, \
     ViewQuizListByCategory, QuizUserProgressView, QuizMarkingList, \
     QuizMarkingDetail, QuizDetailView, QuizTake
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls.static import static
 
 try:
     from django.conf.urls import url
@@ -67,4 +70,4 @@ urlpatterns = [
     url(r'^(?P<quiz_name>[\w-]+)/take/$',
         view=QuizTake.as_view(),
         name='quiz_question'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

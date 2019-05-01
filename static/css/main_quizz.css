@@ -1,0 +1,142 @@
+body {
+	color: black;
+	font-size: 13px;
+	line-height: 23px;
+	background: #fa873b !important;
+	font-family: 'Open Sans', sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+.nav {
+    font-size: 18px !important;
+
+    background: #51bbc7 !important;
+}
+
+.navbar-brand{
+    margin:13px;
+    font-size: 28px !important;
+
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+.carousel-item{
+    text-align: center !important;
+
+}
+.test_but{
+    font-size:30px !important;
+}
+li{
+margin:13px;
+}
+
+.carousel-content {
+  position: absolute !important;
+  bottom: 55% !important;
+  right: 5% !important;
+  z-index: 20 !important;
+  color: white !important;
+  font-size: 22px !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.6) !important;
+}
+
+.carousel-content-two {
+  position: absolute !important;
+  bottom: 38% !important;
+  left: 4% !important;
+  z-index: 20 !important;
+  color: white !important;
+  font-size: 26px !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.6) !important;
+}
+
+.black-c{
+    color: #15272b !important;
+    font: 14px Courier New;
+}
+
+.container-fluid1{
+    background: linear-gradient(-90deg, #fa873b, #51bbc7)  !important;
+    margin-top: 65px !important;
+}
+
+.ui-12{
+    background: orange !important;
+}
+
+.mid-text{
+    font-size: 18px !important;
+    text-align:center;
+    color: white;
+
+}
+
+
+
+.mid-te{
+margin: 120px;
+border: 13px solid #51bbc7; /* Параметры границы */
+    padding: 10px;
+background: #fa873b !important;
+}
+
+.for{
+    color: white !important;
+}
+
+
+.skel{
+
+border: 13px solid #51bbc7; /* Параметры границы */
+    padding: 10px;
+    background: linear-gradient(0deg, #fa873b, #51bbc7)  !important;
+    margin: 120px;
+}
+
+.skel4{
+
+border: 13px solid #51bbc7; /* Параметры границы */
+    padding: 10px;
+    background: linear-gradient(0deg, #ffffff, #51bbc7)  !important;
+    margin: 120px;
+}
+
+.skel2{
+
+border: 4px solid #51bbc7; /* Параметры границы */
+    margin-bottom: 40px !important;
+    margin-top: 40px !important;
+    color: white;
+
+
+}
+
+
+.skel1{
+
+
+    padding: 2px;
+    background: #51bbc7  !important;
+    margin: 20px;
+}
+
+.fon{
+    font-size: 24px !important;
+}
+.table-responsives{
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+.mar{
+    margin: 10px;
+}
