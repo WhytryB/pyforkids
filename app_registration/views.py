@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Person
-from .forms import UserForm, SmsForm, UsersForm2
+from .forms import UserForm, SmsForm, UsersForm2, First_name
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from .smsc_api import *  # точно нужно всё импортировать?
@@ -27,6 +27,7 @@ def registration(request):
     """
     user_form = UserForm()
     sms_form = SmsForm()
+    first_name_form = First_name()
     disabled, disabled2 = "", "disabled"  # Параметры кнопок,которые передаются в html
 
     if request.is_ajax():
@@ -48,6 +49,7 @@ def registration(request):
             #  Отправка сообщения и валидация номера
             smsc = SMSC()  # Иницилизация класса отправки смс стороннего сервиса
             phone = user_form.cleaned_data['username']  # Форма ввода телефона
+
             mes = (my_random_string(4))  # смс пароль
             print(mes)
             Sms_message = Person(id=1, sms_mes=mes)
@@ -70,8 +72,9 @@ def registration(request):
     if request.method == "POST" and 'reg' in request.POST:
 
         user_form = UserForm(request.POST)
+        first_name_form = First_name(request.POST)
         sms_form = SmsForm(request.POST)
-        if user_form.is_valid () and sms_form.is_valid():
+        if user_form.is_valid () and sms_form.is_valid() and first_name_form.is_valid():
             get_id_first_person = Person.objects.get(id=1)  # Получение пароля из смс
             # Проверка: совпадает ли код пользователя и код, отправленный ему
             if str(get_id_first_person.sms_mes) == sms_form.cleaned_data['sms_mes']:
@@ -79,12 +82,16 @@ def registration(request):
                 last_id = User.objects.latest('id').id
                 last_i = Person.objects.latest('id').id
                 password = "empty_password"
+                first_nam = first_name_form.cleaned_data['first_name']
                 # СОхранение номера телефона пользователя в модели
-                User.objects.create_user(**user_form.cleaned_data, id=int(last_id)+1, password=password)
-                create_person = Person(users_id = last_id+1, id = last_i+1) # ПРисваивание id новому пользователю
+                phone = user_form.cleaned_data['username']
+
+                User.objects.create_user(username = first_name_form.cleaned_data['first_name'],email=phone, id=int(last_id)+1, password=password)
+                create_person = Person(users_id = last_id+1,phone=phone, id=last_i+1) # ПРисваивание id новому пользователю
                 create_person.save()
+
                 user = authenticate(
-                    username=user_form.cleaned_data['username'],
+                    username=first_nam,
                     password=password
                 )
                 login(request, user)
@@ -96,6 +103,7 @@ def registration(request):
     return render(request, 'sign_ip.html',
                    {"user_form": user_form,
                     "sms_form": sms_form,
+                    "first_name":first_name_form,
                     "id": id,
                     "disabled": disabled,
                     "disabled2": disabled2})
@@ -110,6 +118,7 @@ def MyLoginView(request):
     """
     user_form = UsersForm2()
     sms_form = SmsForm()
+    first_name_form = First_name()
     disabled, disabled2 = "","disabled"
 
     if request.is_ajax():
@@ -120,7 +129,7 @@ def MyLoginView(request):
        """
         user_form = UsersForm2(request.POST)
         if user_form.is_valid():
-            if User.objects.filter(username=user_form.cleaned_data['username']).exists():
+            if User.objects.filter(email=user_form.cleaned_data['username']).exists():
                 return JsonResponse({'s': True})
             else:
 
@@ -132,7 +141,7 @@ def MyLoginView(request):
         user_form = UsersForm2(request.POST)
         if user_form.is_valid():
             # проверка существует ли пользователь с таким номером или нет
-            if User.objects.filter(username=user_form.cleaned_data['username']).exists():
+            if User.objects.filter(email=user_form.cleaned_data['username']).exists():
                 # Отправка сообщения и валидация номера
                 smsc = SMSC()  # Иницилизация класса отправки смс стороннего сервиса
                 phone = user_form.cleaned_data[ 'username' ]  # Форма ввода телефона
@@ -160,11 +169,13 @@ def MyLoginView(request):
 
         user_form = UsersForm2(request.POST)
         sms_form = SmsForm (request.POST)
-        if user_form.is_valid () and sms_form.is_valid ():
+        first_name_form = First_name(request.POST)
+        if user_form.is_valid () and sms_form.is_valid () and first_name_form.is_valid():
             password = "empty_password"
             # аутентификация пользователя
+            firstname = first_name_form.cleaned_data['first_name']
             user = authenticate(
-                username=user_form.cleaned_data['username'],
+                username=firstname,
                 password=password
             )
             if user is not None:
@@ -184,17 +195,11 @@ def MyLoginView(request):
     return render (request, 'login.html',
                    {"user_form": user_form,
                     "sms_form": sms_form,
+                    "first_name": first_name_form,
                     "id": id,
                     "disabled": disabled,
                     "disabled2":disabled2})
 
-
-def admin_add_person(request):
-    """
-          Функция отображения всех данных пользователей - список
-    """
-
-    return render (request, 'admin_add.html', {"user_form": Person.objects.all()})
 
 
 

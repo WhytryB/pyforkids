@@ -12,7 +12,9 @@ body {
 
     background: #51bbc7 !important;
 }
-
+.container{
+    margin-top: 7%; !important;
+}
 .navbar-brand{
     margin:13px;
     font-size: 28px !important;
@@ -98,7 +100,7 @@ background: #fa873b !important;
 border: 13px solid #51bbc7; /* Параметры границы */
     padding: 10px;
     background: linear-gradient(0deg, #fa873b, #51bbc7)  !important;
-    margin: 120px;
+
 }
 
 .skel4{

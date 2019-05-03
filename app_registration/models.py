@@ -17,14 +17,15 @@ class Person(models.Model):
     birthday = models.DateField('Дата рождения', null=True, blank=True)
     # Смс сообщение , которое присылается пользователю при входе и регистрации
     sms_mes = models.CharField('Сообщение', max_length=100, null=True, blank=True)
-
+    phone = models.CharField('Телефон', max_length=15, null=True, blank=False)
 
     def __str__(self):
         return '{second_name} {first_name} ({birthday}){sms_mes}'.format (
             first_name=self.first_name,
             second_name=self.second_name,
             birthday=self.birthday,
-            sms_mes = self.sms_mes
+            sms_mes = self.sms_mes,
+            phone = self.phone
         )
 
     class Meta:

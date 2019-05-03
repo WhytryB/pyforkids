@@ -6,13 +6,18 @@
 {% endblock %}
 
 {% block content %}
-<h2>Название тесты: {{ sitting.quiz.title }}</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mar3">
+<h2>Название теста: {{ sitting.quiz.title }}</h2>
 <h3>Категория: {{ sitting.quiz.category }}</h3>
-<p>{{ sitting.quiz.description }}</p>
+<p>Описание: {{ sitting.quiz.description }}</p>
 <hr>
 <p>Пользователь: {{ sitting.user }}</p>
 <p>Пройдено: {{ sitting.end|date }}</p>
 <p>Результат: {{ sitting.get_percent_correct }}%</p>
+        </div>
+    </div>
 
 <table class="table table-bordered table-striped">
 
@@ -56,4 +61,5 @@
   </tbody>
 
 </table>
+</div>
 {% endblock %}

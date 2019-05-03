@@ -4,15 +4,20 @@
 {% load quiz_tags %}
 
 {% block title %} {{ quiz.title }} {% endblock %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mar2">
 {% block description %} {{ quiz.title }} - {{ quiz.description }} {% endblock %}
-
+        </div>
+    </div>
+</div>
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-12 mar2">
 {% if previous.answers %}
 
-  <p class="muted"><small>Это прошлый вопрос:</small></p>
+  <p class="muted  mar3"><small>Прошлый вопрос:</small></p>
   <p>{{ previous.previous_question }}</p>
 
   {% if previous.previous_outcome %}
@@ -21,24 +26,25 @@
 	<div class="alert alert-warning">
   {% endif %}
   	  <p><small>
-		Ваш ответ: </small>
+		Результат прошлого ответа: </small>
 		<strong>
-		  {{ previous.previous_outcome|yesno:"правильно,непрпвильно" }}
+		  {{ previous.previous_outcome|yesno:" Ты ответил правильно, Ты ответил неверно" }}
 		</strong>
 	  </p>
 
 	</div>
 
-	Правильный ответ:
 
+{% endif %}
+{% if progress.0 != 0 %}
 	<p><strong>Обьяснение:</strong></p>
 	<div class="well " style="background-color: #fcf8e3;">
 	  <p>{{ previous.previous_question.explanation }}</p>
 	</div>
 
 	<hr>
-
 {% endif %}
+
 
 <br />
 </div>
@@ -65,13 +71,13 @@
             <img src="{{ question.figure.url }}" alt="{{ question.content }}" />
         {% endif %}
         <div class=" mid-text skel black-c">
-                  <h1 >{{ question.content }} ?</h1>
+                  <h1 >{{ question.content }} </h1>
 		    </div>
           <p>
           <small class="muted">Категория вопроса:</small>
           <strong>{{ question.category }}</strong>
         </p>
-        <p>Введи свой вариант ответа:</p>
+        <p>Твой вариант ответа:</p>
 
 <form action="" method="POST">{% csrf_token %}
   <input type=hidden name="question_id" value="{{ question.id }}">

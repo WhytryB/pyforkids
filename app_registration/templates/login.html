@@ -1,0 +1,153 @@
+{% load static %}
+{% load bootstrap3 %}
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+{% bootstrap_messages %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="{% static 'css/style-301.css' %}">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+<div class="ui-301">
+
+		 {% for message in messages %}
+         {% endfor %}
+			<div class="login-reg">
+				<!-- Login Form -->
+				<div class="login-reg-form">
+					<!-- Heading -->
+					<h4>Войти</h4>
+					<br />
+					<!-- Form -->
+					 <form method="POST" enctype="multipart/form-data" class="form-horizontal">
+						<!-- Form Group -->
+                         {% csrf_token %}
+						<div class="form-group">
+							<!-- Label -->
+
+							<div class="col-sm-9">
+								<!-- Input -->
+                            {% bootstrap_form user_form layout='horizontal' error_types='all'  class="form-control" id="user"%}
+                                <div align="center" id ="result"></div>
+                    <div align="center" id ="result1"></div>
+							</div>
+						</div>
+                         {% buttons %}
+                         <div class="form-group">
+
+                          <button type="submit" name="code" {{ disabled }} class="btn btn-primary center-block"
+                        style="margin-bottom: 20px;">Отправить код</button>
+                         </div>
+                         <div class="form-group">
+                             <div class="col-sm-9">
+                        {% bootstrap_form sms_form layout='horizontal' error_types='all' class="form-control" id="password"%}
+                             </div>
+                         </div>
+                         <div class="form-group">
+                             <div class="col-sm-9">
+                        {% bootstrap_form first_name layout='horizontal' error_types='all' class="form-control" id="first_name"%}
+                             </div>
+                         </div>
+                        {% block but %}
+                         <div class="form-group">
+                        <button type="submit" name="reg" {{ disabled2 }} class="btn btn-primary center-block btn-lblue"
+                        style="margin-top: 20px;">Войти</button>
+                         </div>
+                        {% endblock %}
+                        {% endbuttons %}
+
+
+
+
+					</form>
+					<br />
+					<hr />
+
+				</div>
+			</div>
+			<!-- Login Ends -->
+
+		</div>
+
+
+
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+     // CSRF code
+ function getCookie(name) {
+ var cookieValue = null;
+ var i = 0;
+ if (document.cookie && document.cookie !== '') {
+ var cookies = document.cookie.split(';');
+ for (i; i < cookies.length; i++) {
+ var cookie = jQuery.trim(cookies[i]);
+ // Does this cookie string begin with the name we want?
+ if (cookie.substring(0, name.length + 1) === (name + '=')) {
+ cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+ break;
+ }
+ }
+ }
+ return cookieValue;
+ }
+ var csrftoken = getCookie('csrftoken');function csrfSafeMethod(method) {
+ // these HTTP methods do not require CSRF protection
+ return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+ }
+  $.ajaxSetup({
+ crossDomain: false, // obviates need for sameOrigin test
+ beforeSend: function(xhr, settings) {
+ if (!csrfSafeMethod(settings.type)) {
+ xhr.setRequestHeader("X-CSRFToken", csrftoken);
+ }
+ }
+ });
+});
+{% block script %}
+$('#id_username').on('input' , fun);
+var interval;
+function fun(){
+    $.ajax({
+        method: 'POST',
+        url: '/login/',
+        dataType: "json",
+        cache: false,
+        data:  $(this).serialize(),
+        success:
+        function(response) {
+                     console.log(response);
+                     if(response['s'] ) {
+                         $("#result1").show();
+                         $("#result1").html("<div class='alert alert-success'>Номер проверен и принят системой</div>");
+                         $("#result").hide();
+
+                     }
+                     if(response['error'] ) {
+                         $("#result").show();
+                         $("#result").html("<div class='alert alert-danger'>"+ response['error']['username']+"</div>");
+                         $("#result1").hide();
+                     }
+
+
+                },
+
+        error :
+        function (request, status, error) {
+                     console.log(request.responseText);
+                }
+        })
+
+    }
+{% endblock %}
+</script>
+
+</html>

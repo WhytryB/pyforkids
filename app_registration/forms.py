@@ -25,12 +25,23 @@ class UserForm(forms.ModelForm):
                                 help_text=_ ("Пример - '380934492757'"),
                                 error_messages={'invalid': _("Только цифры, телефоны Украины и России,"
                                                              " не меньше 9 и не больше 12 символов")})
+
     class Meta:
         model = User
         fields = ('username',)
 
 
+class First_name(forms.ModelForm):
+    first_name = forms.CharField(min_length=4, max_length=20,
+                               label="Введите ваш ник на сайте",
+                               required=True,
+                               error_messages={
+                                   'invalid': _("Не менее 4 символов и небольше 20, только цифры и английские буквы"),
+                               })
 
+    class Meta:
+        model = User
+        fields = ('first_name',)
 
 class SmsForm(forms.ModelForm):
     #  Класс формы, поел которой хранит полученный код , который вводит пользователь при регитсрации или входе.

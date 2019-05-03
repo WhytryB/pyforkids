@@ -63,11 +63,11 @@ urlpatterns = [
         view=QuizMarkingDetail.as_view(),
         name='quiz_marking_detail'),
 
-    url(r'^(?P<slug>[\w-]+)/$',
+    url(r'^(?P<slug>[-\w]+)/$',
         view=QuizDetailView.as_view(),
         name='quiz_start_page'),
 
-    url(r'^(?P<quiz_name>[\w-]+)/take/$',
+    url(r'^(?P<quiz_name>[-\w]+)/take/$',
         view=QuizTake.as_view(),
         name='quiz_question'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
