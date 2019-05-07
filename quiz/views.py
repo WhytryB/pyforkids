@@ -99,7 +99,6 @@ class QuizMarkingList(QuizMarkerMixin, SittingFilterTitleMixin, ListView):
     def get_queryset(self):
         queryset = super(QuizMarkingList, self).get_queryset()\
                                                .filter(complete=True)
-
         user_filter = self.request.GET.get('user_filter')
         if user_filter:
             queryset = queryset.filter(user__username__icontains=user_filter)
@@ -362,8 +361,6 @@ class QuizTake(FormView):
 def anon_session_score(session, to_add=0, possible=0):
     """
     Возвращает счет сеанса для не авторизованных пользователей.
-     Если число передано, то добавьте это к промежуточному итогу и
-     возвращать счет сессии.
 
     """
     if "session_score" not in session:

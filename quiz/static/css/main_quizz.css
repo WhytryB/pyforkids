@@ -7,18 +7,21 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+.bg-image{
+    background: white url("s3.jpg") repeat !important;
+}
 .nav {
     font-size: 18px !important;
-
     background: #51bbc7 !important;
 }
+
 .container{
     margin-top: 7%; !important;
 }
+
 .navbar-brand{
     margin:13px;
     font-size: 28px !important;
-
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -71,7 +74,7 @@ margin:13px;
 }
 
 .ui-12{
-    background: orange !important;
+    background: white url("p14.jpg") repeat !important;
 }
 
 .mid-text{
@@ -81,50 +84,38 @@ margin:13px;
 
 }
 
-
-
 .mid-te{
-margin: 120px;
-border: 13px solid #51bbc7; /* Параметры границы */
+    margin: 120px;
+    border: 13px solid #51bbc7; /* Параметры границы */
     padding: 10px;
-background: #fa873b !important;
+    background: #fa873b !important;
 }
 
 .for{
     color: white !important;
 }
 
-
 .skel{
-
-border: 13px solid #51bbc7; /* Параметры границы */
+    border: 13px solid #51bbc7; /* Параметры границы */
     padding: 10px;
     background: linear-gradient(0deg, #fa873b, #51bbc7)  !important;
-
 }
 
 .skel4{
-
-border: 13px solid #51bbc7; /* Параметры границы */
+    border: 13px solid #51bbc7; /* Параметры границы */
     padding: 10px;
     background: linear-gradient(0deg, #ffffff, #51bbc7)  !important;
     margin: 120px;
 }
 
 .skel2{
-
-border: 4px solid #51bbc7; /* Параметры границы */
+    border: 4px solid #51bbc7; /* Параметры границы */
     margin-bottom: 40px !important;
     margin-top: 40px !important;
     color: white;
-
-
 }
 
-
 .skel1{
-
-
     padding: 2px;
     background: #51bbc7  !important;
     margin: 20px;
@@ -133,12 +124,14 @@ border: 4px solid #51bbc7; /* Параметры границы */
 .fon{
     font-size: 24px !important;
 }
+
 .table-responsives{
     text-align: center;
     display: block;
     margin-left: auto;
     margin-right: auto
 }
+
 .mar{
     margin: 10px;
 }

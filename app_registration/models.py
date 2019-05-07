@@ -33,32 +33,5 @@ class Person(models.Model):
         verbose_name_plural = 'Люди'
 
 
-"""
-# Модель ТРАНЗАКЦИЯ, ЦЕНА , ЕДИНИЦА ИЗМЕРЕНИЯ
-"""
-
-
-
-"""
-# Модель ГАЛЕРЕЯ
-"""
-
-
-
-class Galery(models.Model):
-    # Модель в которой хранится соответствие персоны и его фоторгафий
-    image = models.ImageField(upload_to='person_photo', null=True, blank=True, default='')
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, related_name='galery')
-
-    class Meta:
-        verbose_name = 'Галерея'
-        verbose_name_plural = 'Галереи'
-
-
-    @property
-    def image_url(self):
-        if self.image and hasattr(self.image, 'url'):
-            return self.image.url
-
 
 

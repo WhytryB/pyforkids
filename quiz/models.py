@@ -129,7 +129,7 @@ class Quiz(models.Model):
     random_order = models.BooleanField(
         blank=False, default=False,
         verbose_name=_("Random Order"),
-        help_text=_("Показать вопросы в случайный порядок или как они установлены?"))
+        help_text=_("Показать вопросы в случайном порядке или как они установлены?"))
 
     max_questions = models.PositiveIntegerField(
         blank=True, null=True, verbose_name=_("Max Questions"),
@@ -137,18 +137,17 @@ class Quiz(models.Model):
 
     answers_at_end = models.BooleanField(
         blank=False, default=False,
-        help_text=_("Правильный ответ НЕ показывается после вопроса ответы отображаются в конце."),
+        help_text=_("Правильный ответ НЕ показывается после вопроса"),
         verbose_name=_("Answers at end"))
 
     exam_paper = models.BooleanField(
         blank=False, default=False,
-        help_text=_("Если да, то результат каждого попытка пользователя будет Хранится. Необходимо для маркировки."),
+        help_text=_("Если да, то результат каждой попытки пользователя будет сохрянятся. Необходимо для маркировки."),
         verbose_name=_("Exam Paper"))
 
     single_attempt = models.BooleanField(
         blank=False, default=False,
-        help_text=_("Если да, то только одна попытка пользователю будет разрешено "
-                    "Не пользователи не могут сдать этот экзамен."),
+        help_text=_("Если да, то только одна попытка пользователю будет разрешена "),
         verbose_name=_("Single Attempt"))
 
     pass_mark = models.SmallIntegerField(
@@ -158,7 +157,7 @@ class Quiz(models.Model):
         validators=[MaxValueValidator(100)])
 
     success_text = models.TextField(
-        blank=True, help_text=_("Отображается, если пользователь проходит."),
+        blank=True, help_text=_("Отображается, если пользователь проходит тест"),
         verbose_name=_("Success Text"))
 
     fail_text = models.TextField(
@@ -169,9 +168,7 @@ class Quiz(models.Model):
         blank=True, default=False,
         verbose_name=_("Draft"),
         help_text=_("Если да, тест не отображается "
-                     "в списке тестов и может быть только"
-                     "взято пользователями, которые могут редактировать"
-                     "викторины."))
+                     "в списке тестов"))
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         self.url = re.sub('\s+', '-', self.url).lower()
@@ -242,11 +239,11 @@ class Progress(models.Model):
      Возвращает словарь, в которой ключом является имя категории, а элемент
          список из трех целых чисел.
 
-         Во-первых, количество правильных вопросов,
+         первое, количество правильных вопросов,
          вторая - это лучший возможный результат,
-         третий процент правильный.
+         третее процент правильных ответов.
 
-         У dict будет один ключ для каждой категории, которую вы определили
+         У dict будет один ключ для каждой категории, которую ты определил
         """
         score_before = self.score
         output = {}
@@ -280,12 +277,6 @@ class Progress(models.Model):
         return output
 
     def update_score(self, question, score_to_add=0, possible_to_add=0):
-        """
-    Передача в вопросе объекта, сумма для увеличения балла
-         и максимально возможно.
-
-         Ничего не возвращает.
-        """
         category_test = Category.objects.filter(category=question.category)\
                                         .exists()
 
@@ -330,8 +321,8 @@ class Progress(models.Model):
 
     def show_exams(self):
         """
-        Находит предыдущие тесты, помеченные как «экзаменационные работы».
-         Возвращает набор запросов завершенных экзаменов.
+        Находит предыдущие тесты,
+         Возвращает набор запросов завершенных тестов.
         """
         return Sitting.objects.filter(user=self.user, complete=True)
 
@@ -350,7 +341,7 @@ class SittingManager(models.Manager):
         question_set = [item.id for item in question_set]
 
         if len(question_set) == 0:
-            raise ImproperlyConfigured('Набор вопросов викторины пуст. Пожалуйста, настройте вопросы правильно')
+            raise ImproperlyConfigured('Набор тестов пуст. Пожалуйста, настройте вопросы правильно')
 
         if quiz.max_questions and quiz.max_questions < len(question_set):
             question_set = question_set[:quiz.max_questions]
@@ -385,8 +376,8 @@ class SittingManager(models.Manager):
 
 class Sitting(models.Model):
     """
-   Используется для хранения прогресса вошедших в систему пользователей, проводящих викторину.
-     Заменяет систему сеансов, используемую другими пользователями.
+   Используется для хранения прогресса вошедших в систему пользователей, проводящих тесты.
+
 
      Question_order - это список целых чисел pks всех вопросов в
      викторина, по порядку.
@@ -396,7 +387,7 @@ class Sitting(models.Model):
 
      Incorrect_questions - это список в том же формате.
 
-     Сидение удаляется, когда тест завершен, если quiz.exam_paper не имеет значение true.
+     Сведенья удаляется, когда тест завершен, если quiz.exam_paper не имеет значение true.
 
      User_answers - это объект json, в котором хранится вопрос PK
      с ответом, который дал пользователь.
@@ -438,13 +429,13 @@ class Sitting(models.Model):
     objects = SittingManager()
 
     class Meta:
-        permissions = (("view_sittings", _("Могу увидеть законченные экзамены.")),)
+        permissions = (("view_sittings", _("Можно видеть законченные экзамены.")),)
 
     def get_first_question(self):
         """
         Возвращает следующий вопрос.
          Если вопрос не найден, возвращает False
-         НЕ удаляет вопрос в начале списка.
+
         """
         if not self.question_list:
             return False
@@ -496,8 +487,7 @@ class Sitting(models.Model):
 
     def add_incorrect_question(self, question):
         """
-   Добавляет в список неверный вопрос.
-         Объект вопроса должен быть передан.
+         Добавляет в список неверный вопрос.
         """
         if len(self.incorrect_questions) > 0:
             self.incorrect_questions += ','
@@ -565,7 +555,7 @@ class Sitting(models.Model):
     def progress(self):
         """
         Возвращает количество ответов на вопросы и общее количество
-         вопросы.
+         вопросов.
         """
         answered = len(json.loads(self.user_answers))
         total = self.get_max_score

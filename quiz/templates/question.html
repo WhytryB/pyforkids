@@ -15,53 +15,43 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 mar2">
-{% if previous.answers %}
+            {% if previous.answers %}
 
-  <p class="muted  mar3"><small>Прошлый вопрос:</small></p>
-  <p>{{ previous.previous_question }}</p>
+              <p class="muted  mar3"><small>Прошлый вопрос:</small></p>
+              <p>{{ previous.previous_question }}</p>
 
-  {% if previous.previous_outcome %}
-	<div class="alert alert-success">
-  {% else %}
-	<div class="alert alert-warning">
-  {% endif %}
-  	  <p><small>
-		Результат прошлого ответа: </small>
-		<strong>
-		  {{ previous.previous_outcome|yesno:" Ты ответил правильно, Ты ответил неверно" }}
-		</strong>
-	  </p>
+              {% if previous.previous_outcome %}
+                <div class="alert alert-success">
+              {% else %}
+                <div class="alert alert-warning">
+              {% endif %}
+                  <p><small>
+                    Результат прошлого ответа: </small>
+                    <strong>
+                      {{ previous.previous_outcome|yesno:" Ты ответил правильно, Ты ответил неверно" }}
+                    </strong>
+                  </p>
+                </div>
+            {% endif %}
+            {% if progress.0 != 0 %}
+                <p><strong>Обьяснение:</strong></p>
+                <div class="well " style="background-color: #fcf8e3;">
+                  <p>{{ previous.previous_question.explanation }}</p>
+                </div>
 
-	</div>
+                <hr>
+            {% endif %}
 
-
-{% endif %}
-{% if progress.0 != 0 %}
-	<p><strong>Обьяснение:</strong></p>
-	<div class="well " style="background-color: #fcf8e3;">
-	  <p>{{ previous.previous_question.explanation }}</p>
-	</div>
-
-	<hr>
-{% endif %}
-
-
-<br />
-</div>
+            <br />
+            </div>
         </div>
     </div>
 </div>
-
-
-
-
-
 
 <div class="container">
     <div class="row">
         <div class="col-md-12 mar2">
         {% if question %}
-
         {% if progress %}
         <div style="float: right;">
         Вопрос {{ progress.0|add:1 }} из {{ progress.1 }}
@@ -79,26 +69,20 @@
         </p>
         <p>Твой вариант ответа:</p>
 
-<form action="" method="POST">{% csrf_token %}
-  <input type=hidden name="question_id" value="{{ question.id }}">
-
-  <ul class="list-group">
-
-	{% for answer in form.answers %}
-	  <li class="list-group-item">
-	    {{ answer }}
-	  </li>
-	{% endfor %}
-
-  </ul>
-  <input type="submit" value=Проверить class="btn btn-large btn-block btn-warning btn-lblue" >
-</form>
+        <form action="" method="POST">{% csrf_token %}
+          <input type=hidden name="question_id" value="{{ question.id }}">
+          <ul class="list-group">
+            {% for answer in form.answers %}
+              <li class="list-group-item">
+                {{ answer }}
+              </li>
+            {% endfor %}
+          </ul>
+          <input type="submit" value=Проверить class="btn btn-large btn-block btn-warning btn-lblue" >
+        </form>
         </div>
     </div>
 </div>
 {% endif %}
-
 <hr>
-
-
 {% endblock %}

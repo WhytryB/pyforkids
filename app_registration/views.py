@@ -3,7 +3,7 @@ from .models import Person
 from .forms import UserForm, SmsForm, UsersForm2, First_name
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from .smsc_api import *  # точно нужно всё импортировать?
+from .smsc_api import *
 import uuid
 from django.http import JsonResponse
 from django.contrib import messages
@@ -11,7 +11,7 @@ from django.shortcuts import redirect
 
 
 def my_random_string(string_length=10):
-    """Возвращает случайную строку"""  # а зачем случайная строка?
+    """Возвращает случайную строку"""
     """Возвращает случайную строку, нужно для отправки кода смс"""
     random = str(uuid.uuid4())  # конвертирование UUID4 в строку.
     random = random.upper()

@@ -15,9 +15,6 @@
     </div>
 </div>
 
-
-
-		<!-- UI # -->
 <div class="ui-297">
     <div class="container">
         <div class="row">
@@ -25,8 +22,6 @@
         {% if quizzes %}
           {% for quiz in quizzes %}
             <div class="col-md-4">
-
-                <!-- Add the class "box-shadow" for shadow effect -->
                 <div class="bg-orange white box-shadow">
                     <h4 class="white">
                     <a href="{% url 'quiz_question' quiz_name=quiz.url %}" class="btn btn-lblue">
@@ -34,7 +29,6 @@
 			  </a></h4>
                 </div>
                 <br />
-
             </div>
              {% endfor %}
          {% else %}
@@ -44,8 +38,5 @@
         </div>
     </div>
 </div>
-
-
-
 
 {% endblock %}

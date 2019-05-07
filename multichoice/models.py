@@ -13,12 +13,14 @@ ANSWER_ORDER_OPTIONS = (
 
 
 class MCQuestion(Question):
-
+    """
+    Класс для тестов с несколькими вариантами ответа
+    """
     answer_order = models.CharField(
         max_length=30, null=True, blank=True,
         choices=ANSWER_ORDER_OPTIONS,
         help_text=_("Порядок, в котором многократный выбор"
-                     "отображаются вариантах ответа"
+                     "отображаются в вариантах ответа"
                      "пользователю"),
         verbose_name=_("Answer Order"))
 
@@ -31,6 +33,7 @@ class MCQuestion(Question):
             return False
 
     def order_answers(self, queryset):
+        " последовательность вывода тестов "
         if self.answer_order == 'content':
             return queryset.order_by('content')
         if self.answer_order == 'random':
@@ -56,6 +59,9 @@ class MCQuestion(Question):
 
 @python_2_unicode_compatible
 class Answer(models.Model):
+    """
+    класс для оьяснение теста
+    """
     question = models.ForeignKey(MCQuestion, verbose_name=_("Question"), on_delete=models.CASCADE)
 
     content = models.CharField(max_length=1000,

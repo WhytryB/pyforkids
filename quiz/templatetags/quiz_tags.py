@@ -6,7 +6,7 @@ register = template.Library()
 @register.inclusion_tag('correct_answer.html', takes_context=True)
 def correct_answer_for_all(context, question):
     """
-    обрабатывает правильный ответ на основе заданного объекта вопроса
+    обрабатывает правильный ответ на основе заданного вопроса
      если ответ неверный, информирует пользователя
     """
     answers = question.get_answers()

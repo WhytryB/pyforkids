@@ -1,5 +1,5 @@
 from django import forms
-from .models import Galery,Person
+from .models import Person
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
@@ -58,12 +58,5 @@ class SmsForm(forms.ModelForm):
 
 
 
-class ImageForm(forms.ModelForm):
-    # класс формы для добавления изображения персоны
-
-    class Meta:
-        model = Galery
-
-        fields = ('image', 'id')
 
 

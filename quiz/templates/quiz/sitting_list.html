@@ -6,11 +6,8 @@
     <div class="ui-56">
       {% if sitting_list %}
               <div class="bg-orange white box-shadow mar">
-
                       <h2>Топ пользователей</h2>
-
                 </div>
-
 			<div class="table-responsives ">
 				<table class="table table-striped">
                  <thead>
@@ -34,7 +31,6 @@
                 </tr>
                     {% for sitting in sitting_list %}
 					<tr>
-
 						<td><a data-toggle="tooltip" title="Soemthing">{{ sitting.user }}<i class="fa fa-angle-double-up red"></i></a></td>
 						<td><a data-toggle="tooltip" title="Soemthing" >{{ sitting.quiz }}<i class="fa fa-angle-double-down green"></i></a></td>
 						<td><a data-toggle="tooltip" title="Soemthing" >{{ sitting.end|date }}<i class="fa fa-angle-double-down yellow"></i></a></td>

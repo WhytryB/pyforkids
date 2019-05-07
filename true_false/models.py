@@ -9,8 +9,8 @@ class TF_Question(Question):
     correct = models.BooleanField(blank=False,
                                   default=False,
                                   help_text=_("Отметьте это, если вопрос"
-                                               "Это правда. Оставьте это пустым для"
-                                               " ложного."),
+                                               "Это правда. Оставьте это пустым если не правда"
+                                               ""),
                                   verbose_name=_("Correct"))
 
     def check_if_correct(self, guess):
